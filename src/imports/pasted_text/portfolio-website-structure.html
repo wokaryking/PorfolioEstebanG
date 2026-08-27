@@ -1,0 +1,200 @@
+Create an interactive portfolio website based on the attached diagram and the current dark visual style. Do not redesign the aesthetic; keep the dark theme, yellow/gold accents, typography, sidebar navigation, spacing, and rounded card style.
+
+Important: generate the structure as editable HTML-friendly code. Every media area must use the correct semantic HTML element, not empty generic divs. The final code should allow me to replace images, videos, website previews, and 3D embeds by changing only the URL or embed code later.
+
+General structure
+
+Create pages/sections for Home, About, and Projects.
+
+Keep the left sidebar navigation fixed and consistent across all pages.
+
+Use a responsive layout with Auto Layout-style spacing and reusable components.
+
+Preserve the current dark UI with yellow/gold accents.
+
+Home and About
+
+On the Home page, the profile image on the right must be clickable and navigate to the About page.
+
+Use an actual image element for the profile photo so it can be replaced later:
+
+<img src="assets/profile.jpg" alt="Profile photo" class="profile-image">
+
+The About page must include a larger portrait, biography, skills, experience, and contact information.
+
+Use semantic elements such as <section>, <article>, <h1>, <h2>, and <p>.
+
+Projects page and collapse/explore behavior
+
+Follow the attached diagram and use the color-coded flow as the interaction guide:
+
+Orange lines indicate image replacement areas. These areas must use real <img> elements.
+
+Red lines indicate the Explore / Collapse toggle behavior.
+
+Collapse mode must match the current project layout: show only one featured project card per category.
+
+Explore mode must reveal all projects in that category in a horizontal gallery or grid.
+
+The toggle button should switch between:
+
+<button class="toggle-view" aria-expanded="false">Explore</button>
+
+When clicked, it changes to Collapse and returns to the single-project view.
+
+Project interaction flow
+
+Each project card should show a thumbnail, category, title, and short summary.
+
+When a project is clicked, it enters Visualizar mode and shows a detailed description panel.
+
+This description panel must include a Ver proyecto button.
+
+Clicking Ver proyecto opens the large project screen (Pantalla grande #3 in the diagram).
+
+The large project screen must include:
+
+Project title.
+
+Category (3D, Web, Video, Branding, etc.).
+
+Long description.
+
+A description container with internal scroll if the text is long, without changing the page size:
+
+<div class="project-description" style="max-height: 220px; overflow-y: auto;">
+  <p>Long project description...</p>
+</div>
+
+Section-specific tools used.
+
+Buttons to go back to the description view and back to the project gallery/home.
+
+When the user clicks Reproducir, automatically transition to the final large-screen view. Include a button to return to the description view, and from there another button to return to the project list or home.
+
+Apply this same interaction flow to 3D, Web, and Video projects.
+
+Media requirements: use correct HTML elements
+
+Images must use <img> tags:
+
+<img src="assets/project-image.jpg" alt="Project preview" class="project-image">
+
+Videos must support both local files and embedded sources:
+
+<video controls poster="assets/video-cover.jpg" class="project-video">
+  <source src="https://example.com/video.mp4" type="video/mp4">
+</video>
+
+Also allow YouTube embeds:
+
+<iframe src="https://www.youtube.com/embed/VIDEO_ID"
+        title="YouTube video"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+</iframe>
+
+And allow Google Drive embeds:
+
+<iframe src="https://drive.google.com/file/d/FILE_ID/preview"
+        title="Google Drive video"
+        allow="autoplay">
+</iframe>
+
+Website previews must be prepared as clickable preview cards. Use a real image placeholder for the preview and a link for the live site:
+
+<a href="https://la-cosina-de-jeremy.netlify.app/" target="_blank" rel="noopener" class="website-preview">
+  <img src="assets/la-cosina-preview.jpg" alt="La Cosina de Jeremy website preview">
+</a>
+
+The preview image should visually represent the website, and replacing the website later should only require changing the href and image source.
+
+3D projects must use an embeddable iframe container, not a generic empty div. Use the Sketchfab embed structure so I can replace the embed code later:
+
+<div class="sketchfab-embed-wrapper">
+  <iframe title="RadioUv"
+          frameborder="0"
+          allowfullscreen
+          allow="autoplay; fullscreen; xr-spatial-tracking"
+          src="https://sketchfab.com/models/41d373739fd84506bf7d1d6ec9416941/embed?autospin=1&autostart=1&preload=1">
+  </iframe>
+</div>
+
+Design this as a reusable 3D embed component where I can paste a new Sketchfab embed code later.
+
+Section-specific project content
+
+3D projects should include fields such as:
+
+Project title.
+
+Theme or campaign.
+
+Description with subsections like “Qué busca”, “Qué logramos”, and project objectives.
+
+Tools used, for example: Maya, Substance Painter, Photoshop, Illustrator.
+
+Web projects should include the website preview image, live link, description, technologies used, and a Ver proyecto button that opens the live site in a new tab.
+
+Video projects should include a video thumbnail, embedded video player, description, and editing tools used.
+
+Each category should have a predefined tools block that can be customized depending on the section.
+
+README and reusable resources
+
+Create a README section/page for the project that documents reusable resources and how to add new projects. Include:
+
+Logo assets and naming conventions.
+
+Button styles and states (default, hover, active, disabled).
+
+Card styles for collapse mode and explore mode.
+
+Project metadata fields:
+
+Title.
+
+Category.
+
+Theme.
+
+Short description.
+
+Long description.
+
+Tools used.
+
+Image URL.
+
+Video URL.
+
+Website URL.
+
+3D embed code.
+
+Instructions for adding a new project by replacing only the URL, image source, video source, or embed code.
+
+Recommended tool lists for each category:
+
+3D: Maya, Blender, Substance Painter, Photoshop, Illustrator.
+
+Web: HTML, CSS, JavaScript, Figma, WordPress.
+
+Video: After Effects, Premiere Pro, Photoshop.
+
+Prototype and code expectations
+
+Use Smart Animate transitions between Collapse, Explore, Visualizar, and Pantalla grande states.
+
+Create reusable components for project cards, media viewers, buttons, and description panels.
+
+Use semantic HTML placeholders so the exported code can be edited later without restructuring the layout.
+
+Do not use generic empty <div> elements where a specific media element should be used.
+
+Make all media areas easy to update by changing only the src, href, or embed code.
+
+Goal
+
+The final result should be a dark, modern, interactive portfolio that follows the attached diagram exactly, supports Collapse and Explore views, includes detailed project visualization screens, and is coded in a way that allows future updates by simply replacing image URLs, video URLs, website links, or 3D embed codes.
