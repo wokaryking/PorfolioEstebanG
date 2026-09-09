@@ -1,4 +1,6 @@
 import { useState } from "react";
+import estebanPortrait from "../../imports/Esteban.png";
+import { useLanguage } from "../LanguageContext";
 
 const skills = [
  /*  { name: "Brand Identity", level: 50 }, */
@@ -52,6 +54,9 @@ function SkillBar({ name, level }: { name: string; level: number }) {
 }
 
 export function AboutSection() {
+  const { language } = useLanguage();
+  const isSpanish = language === "es";
+
   return (
     <section
       id="about"
@@ -73,7 +78,7 @@ export function AboutSection() {
             marginBottom: "12px",
           }}
         >
-          About Me
+          {isSpanish ? "Sobre mí" : "About Me"}
         </p>
         <h2
           style={{
@@ -85,16 +90,16 @@ export function AboutSection() {
             maxWidth: "500px",
           }}
         >
-          Diseñador con fuerza en marca,
+          {isSpanish ? "Diseñador con fuerza en marca," : "Designer focused on brand identity,"}
           <br />
-          <span style={{ color: "#F4B321" }}>3D y composición.</span>
+          <span style={{ color: "#F4B321" }}>{isSpanish ? "3D y composición." : "3D and composition."}</span>
         </h2>
       </div>
 
       <div style={{ display: "flex", gap: "80px", alignItems: "flex-start" }}>
         {/* Left — Portrait + Info Cards */}
         <div style={{ flexShrink: 0 }}>
-          {/* Portrait Placeholder */}
+          {/* Portrait */}
           <div
             style={{
               width: "320px",
@@ -110,26 +115,19 @@ export function AboutSection() {
               justifyContent: "center",
             }}
           >
-            <div style={{ textAlign: "center" }}>
-              <div
-                style={{
-                  width: "80px",
-                  height: "80px",
-                  background: "rgba(244,179,33,0.1)",
-                  borderRadius: "50%",
-                  margin: "0 auto 12px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "32px",
-                }}
-              >
-                👤
-              </div>
-              <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "12px", letterSpacing: "0.1em" }}>
-                PORTRAIT PHOTO
-              </span>
-            </div>
+            <img
+              src={estebanPortrait}
+              alt="Esteban"
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "contain",
+                objectPosition: "center bottom",
+                zIndex: 1,
+              }}
+            />
             {/* Corner accent */}
             <div
               style={{
@@ -140,7 +138,7 @@ export function AboutSection() {
                 height: "60px",
                 background: "#F4B321",
                 borderRadius: "16px 0 0 0",
-                opacity: 0.15,
+                zIndex: 2,
               }}
             />
           </div>
@@ -177,13 +175,13 @@ export function AboutSection() {
               maxWidth: "560px",
             }}
           >
-            I'm a graphic designer with over 5 years of experience creating memorable brand identities,
-            immersive 3D visuals, and editorial compositions. My work combines aesthetics with strategy —
-            every piece I create is crafted to connect with its audience on a deeper level.
+            {isSpanish
+              ? "Soy diseñador gráfico con más de 5 años de experiencia creando identidades de marca memorables, visuales 3D inmersivos y composiciones editoriales. Mi trabajo combina estética y estrategia; cada pieza busca conectar con su audiencia a un nivel más profundo."
+              : "I'm a graphic designer with over 5 years of experience creating memorable brand identities, immersive 3D visuals, and editorial compositions. My work combines aesthetics with strategy — every piece I create is crafted to connect with its audience on a deeper level."}
             <br /><br />
-            I work with clients ranging from startups building their first brand to established companies
-            looking for a creative refresh. My process is collaborative, detail-oriented, and always driven
-            by the client's vision.
+            {isSpanish
+              ? "Trabajo con clientes que van desde startups creando su primera marca hasta empresas establecidas que buscan renovarse. Mi proceso es colaborativo, detallista y siempre guiado por la visión del cliente."
+              : "I work with clients ranging from startups building their first brand to established companies looking for a creative refresh. My process is collaborative, detail-oriented, and always driven by the client's vision."}
           </p>
 
           {/* Skills */}
@@ -196,7 +194,7 @@ export function AboutSection() {
               letterSpacing: "0.01em",
             }}
           >
-            Skills & Expertise
+            {isSpanish ? "Habilidades y experiencia" : "Skills & Expertise"}
           </h3>
           {skills.map((skill) => (
             <SkillBar key={skill.name} name={skill.name} level={skill.level} />

@@ -1,5 +1,6 @@
 import { Check, Zap } from "lucide-react";
 import { useState } from "react";
+import { useLanguage } from "../LanguageContext";
 
 const plans = [
   {
@@ -239,6 +240,9 @@ function PricingCard({ plan }: PricingCardProps) {
 }
 
 export function PricingSection() {
+  const { language } = useLanguage();
+  const isSpanish = language === "es";
+
   return (
     <section
       id="pricing"
@@ -272,7 +276,7 @@ export function PricingSection() {
             marginBottom: "12px",
           }}
         >
-          Investment
+          {isSpanish ? "Inversión" : "Investment"}
         </p>
         <h2
           style={{
@@ -284,7 +288,7 @@ export function PricingSection() {
             marginBottom: "16px",
           }}
         >
-          My Pricing Plan
+          {isSpanish ? "Mis planes de precios" : "My Pricing Plan"}
         </h2>
         <p
           style={{
@@ -294,7 +298,9 @@ export function PricingSection() {
             lineHeight: 1.6,
           }}
         >
-          Transparent, flexible pricing for every stage of your creative journey. No hidden fees.
+          {isSpanish
+            ? "Precios transparentes y flexibles para cada etapa de tu proyecto creativo. Sin cargos ocultos."
+            : "Transparent, flexible pricing for every stage of your creative journey. No hidden fees."}
         </p>
       </div>
 

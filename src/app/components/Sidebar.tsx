@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Github, Twitter, Instagram, Linkedin, Youtube, Star, X, Send, ChevronUp, ChevronDown, Loader2 } from "lucide-react";
 import { projectId, publicAnonKey } from "/utils/supabase/info";
+import { useLanguage } from "../LanguageContext";
 
 const API_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-6c8ccaad`;
 
@@ -10,12 +11,12 @@ interface SidebarProps {
 }
 
 const navItems = [
-  { id: "home", label: "Home" },
-  { id: "about", label: "About" },
-  { id: "projects", label: "Projects" },
-  { id: "services", label: "Services" },
-  { id: "pricing", label: "Pricing" },
-  { id: "contact", label: "Contact" },
+  { id: "home", label: { es: "Inicio", en: "Home" } },
+  { id: "about", label: { es: "Sobre mí", en: "About" } },
+  { id: "projects", label: { es: "Proyectos", en: "Projects" } },
+  { id: "services", label: { es: "Servicios", en: "Services" } },
+  { id: "pricing", label: { es: "Precios", en: "Pricing" } },
+  { id: "contact", label: { es: "Contacto", en: "Contact" } },
 ];
 
 const socialLinks = [
@@ -36,13 +37,7 @@ interface Review {
   createdAt: number;
 }
 
-const fallbackReviews: Review[] = [
-  { id: 1, name: "Carlos M.", role: "CEO, TechFlow", text: "Increíble trabajo en el video editing, superó todas mis expectativas.", rating: 5, avatar: "C", createdAt: 1 },
-  { id: 2, name: "Laura P.", role: "Marketing Dir.", text: "El diseño web es exactamente lo que necesitábamos. Muy profesional.", rating: 5, avatar: "L", createdAt: 2 },
-  { id: 3, name: "Andrés R.", role: "Content Creator", text: "Edición de video de primer nivel. Los colores y el ritmo son perfectos.", rating: 5, avatar: "A", createdAt: 3 },
-  { id: 4, name: "Sofía T.", role: "Startup Founder", text: "Rápido, creativo y muy fácil de trabajar. 100% recomendado.", rating: 5, avatar: "S", createdAt: 4 },
-  { id: 5, name: "Miguel V.", role: "Art Director", text: "Los diseños 3D son espectaculares. Gran atención al detalle.", rating: 5, avatar: "M", createdAt: 5 },
-];
+const fallbackReviews: Review[] = [];
 
 function StarRating({ rating, size = 12 }: { rating: number; size?: number }) {
   return (
@@ -90,15 +85,15 @@ function ReviewCard({ review }: { review: Review }) {
         >
           {review.avatar}
         </div>
-        <div style={{ minWidth: 0 }}>
-          <div style={{ fontSize: "11px", fontWeight: 600, color: "#fff", lineHeight: 1.2 }}>
+        <div style={{ minWidth: 0, flex: 1, overflow: "hidden" }}>
+          <div style={{ fontSize: "11px", fontWeight: 600, color: "#fff", lineHeight: 1.2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
             {review.name}
           </div>
-          <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.4)", lineHeight: 1.2 }}>
+          <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.4)", lineHeight: 1.2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
             {review.role}
           </div>
         </div>
-        <div style={{ marginLeft: "auto" }}>
+        <div style={{ marginLeft: "auto", flexShrink: 0 }}>
           <StarRating rating={review.rating} size={10} />
         </div>
       </div>
@@ -118,7 +113,7 @@ function ReviewsModal({
   onClose: () => void;
   onSubmit: (r: Omit<Review, "id" | "createdAt">) => Promise<void>;
 }) {
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [text, setText] = useState("");
   const [rating, setRating] = useState(5);
@@ -126,23 +121,24 @@ function ReviewsModal({
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const formRef = useRef<HTMLDivElement>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !text.trim()) return;
+    if (!email.trim() || !text.trim()) return;
     setSubmitting(true);
     setError("");
     try {
       await onSubmit({
-        name: name.trim(),
+        name: email.trim(),
         role: role.trim() || "Cliente",
         text: text.trim(),
         rating,
-        avatar: name.trim()[0].toUpperCase(),
+        avatar: email.trim()[0].toUpperCase(),
       });
       setSubmitted(true);
       setTimeout(() => {
-        setName(""); setRole(""); setText(""); setRating(5); setSubmitted(false);
+        setEmail(""); setRole(""); setText(""); setRating(5); setSubmitted(false);
       }, 2500);
     } catch {
       setError("No se pudo enviar. Intenta de nuevo.");
@@ -214,12 +210,35 @@ function ReviewsModal({
               {reviews.length} reseñas · Promedio {avg} ★
             </p>
           </div>
-          <button
-            onClick={onClose}
-            style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.4)", padding: "4px" }}
-          >
-            <X size={18} />
-          </button>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <button
+              type="button"
+              onClick={() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "5px",
+                background: "rgba(244,179,33,0.1)",
+                border: "1px solid rgba(244,179,33,0.3)",
+                borderRadius: "6px",
+                padding: "6px 9px",
+                color: "#F4B321",
+                fontSize: "11px",
+                cursor: "pointer",
+              }}
+            >
+              <ChevronDown size={13} />
+              Escribir reseña
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Cerrar reseñas"
+              style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.4)", padding: "4px" }}
+            >
+              <X size={18} />
+            </button>
+          </div>
         </div>
 
         <div style={{ flex: 1, overflowY: "auto", padding: "16px 24px" }}>
@@ -254,11 +273,11 @@ function ReviewsModal({
                   >
                     {r.avatar}
                   </div>
-                  <div>
-                    <div style={{ fontSize: "13px", fontWeight: 600, color: "#fff" }}>{r.name}</div>
-                    <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.4)" }}>{r.role}</div>
+                  <div style={{ minWidth: 0, flex: 1, overflow: "hidden" }}>
+                    <div style={{ fontSize: "13px", fontWeight: 600, color: "#fff", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{r.name}</div>
+                    <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.4)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{r.role}</div>
                   </div>
-                  <div style={{ marginLeft: "auto" }}>
+                  <div style={{ marginLeft: "auto", flexShrink: 0 }}>
                     <StarRating rating={r.rating} size={13} />
                   </div>
                 </div>
@@ -271,6 +290,7 @@ function ReviewsModal({
 
           {/* Submit form */}
           <div
+            ref={formRef}
             style={{
               padding: "16px",
               background: "rgba(244,179,33,0.04)",
@@ -289,10 +309,12 @@ function ReviewsModal({
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                 <div style={{ display: "flex", gap: "10px" }}>
                   <input
+                    type="email"
                     style={inputStyle}
-                    placeholder="Tu nombre *"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Tu correo electrónico *"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="email"
                     required
                   />
                   <input
@@ -469,6 +491,7 @@ function ReviewsTicker({ reviews, onOpenModal }: { reviews: Review[]; onOpenModa
 }
 
 export function Sidebar({ activeSection, onNavClick }: SidebarProps) {
+  const { language } = useLanguage();
   const [reviews, setReviews] = useState<Review[]>(fallbackReviews);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -606,7 +629,7 @@ export function Sidebar({ activeSection, onNavClick }: SidebarProps) {
                 />
               )}
               <span style={{ marginLeft: activeSection === item.id ? "12px" : "0" }}>
-                {item.label}
+                {item.label[language]}
               </span>
             </button>
           ))}

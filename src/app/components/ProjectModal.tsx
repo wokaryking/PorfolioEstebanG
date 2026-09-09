@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { X, ChevronLeft, ChevronRight, ExternalLink, ArrowLeft, Play } from "lucide-react";
 
 export type ModalType = "video" | "web" | "3d";
@@ -167,6 +167,15 @@ function MediaThumb({ project }: { project: Project }) {
 export function ProjectModal({ project, projects, currentIndex, onClose, onNavigate }: ProjectModalProps) {
   const [mode, setMode] = useState<"visualizar" | "grande">("visualizar");
 
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, []);
+
   const handlePrev = () => {
     const i = currentIndex > 0 ? currentIndex - 1 : projects.length - 1;
     onNavigate(i);
@@ -188,6 +197,7 @@ export function ProjectModal({ project, projects, currentIndex, onClose, onNavig
         zIndex: 1000,
         display: "flex", alignItems: "center", justifyContent: "center",
         padding: "40px",
+        overflow: "hidden",
       }}
     >
       {mode === "visualizar" ? (
@@ -261,13 +271,14 @@ export function ProjectModal({ project, projects, currentIndex, onClose, onNavig
         </div>
       ) : (
         /* ── PANTALLA GRANDE ── */
-        <div style={{
+        <div className="project-modal-content" style={{
           background: "#141414",
           border: "1px solid rgba(255,255,255,0.08)",
           borderRadius: "20px",
-          width: "100%", maxWidth: "980px",
-          maxHeight: "92vh",
-          overflow: "hidden",
+          width: "min(980px, calc(100vw - 32px))",
+          maxHeight: "calc(100vh - 32px)",
+          overflowY: "auto",
+          overflowX: "hidden",
           display: "flex", flexDirection: "column",
           position: "relative",
         }}>
@@ -278,7 +289,7 @@ export function ProjectModal({ project, projects, currentIndex, onClose, onNavig
 
           {/* Media area */}
           <div style={{
-            height: "460px", flexShrink: 0,
+            height: "min(460px, 50vh)", minHeight: "220px", flexShrink: 0,
             background: "#0a0a0a",
             position: "relative", overflow: "hidden",
           }}>
@@ -306,10 +317,10 @@ export function ProjectModal({ project, projects, currentIndex, onClose, onNavig
           </div>
 
           {/* Info panel */}
-          <div style={{ padding: "28px 36px 32px", overflow: "auto" }}>
-            <div style={{ display: "flex", gap: "32px", alignItems: "flex-start" }}>
+          <div style={{ padding: "28px 36px 32px", position: "relative" }}>
+            <div style={{ display: "block" }}>
               {/* Left info */}
-              <div style={{ flex: 1 }}>
+              <div style={{ width: "100%", minWidth: 0 }}>
                 {/* Back button */}
                 <button
                   onClick={() => setMode("visualizar")}
@@ -336,11 +347,7 @@ export function ProjectModal({ project, projects, currentIndex, onClose, onNavig
                   </p>
                 )}
 
-                {/* Scrollable long description */}
-                <div
-                  className="project-description"
-                  style={{ maxHeight: "220px", overflowY: "auto", paddingRight: "8px" }}
-                >
+                <div className="project-description" style={{ paddingRight: "8px" }}>
                   <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "14px", lineHeight: 1.8 }}>
                     {project.longDescription}
                   </p>
@@ -348,7 +355,7 @@ export function ProjectModal({ project, projects, currentIndex, onClose, onNavig
               </div>
 
               {/* Right: tools + action */}
-              <div style={{ flexShrink: 0, minWidth: "200px" }}>
+              <div style={{ position: "absolute", top: "28px", right: "36px", width: "min(360px, 40%)", minWidth: "200px" }}>
                 <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "11px", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "12px" }}>
                   {project.type === "3d" ? "Software utilizado" : "Tecnologías"}
                 </p>

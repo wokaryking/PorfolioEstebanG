@@ -6,6 +6,8 @@ import { ProjectsSection } from "./components/ProjectsSection";
 import { ServicesSection } from "./components/ServicesSection";
 import { PricingSection } from "./components/PricingSection";
 import { ContactSection } from "./components/ContactSection";
+import { LanguageProvider } from "./LanguageContext";
+import { LanguageToggle } from "./components/LanguageToggle";
 
 const sections = ["home", "about", "projects", "services", "pricing", "contact"];
 
@@ -52,7 +54,8 @@ export default function App() {
   }, []);
 
   return (
-    <div
+    <LanguageProvider>
+      <div
       style={{
         display: "flex",
         height: "100vh",
@@ -62,11 +65,11 @@ export default function App() {
         fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       }}
     >
-      {/* Fixed Sidebar */}
-      <Sidebar activeSection={activeSection} onNavClick={handleNavClick} />
+        {/* Fixed Sidebar */}
+        <Sidebar activeSection={activeSection} onNavClick={handleNavClick} />
 
       {/* Scrollable Main Content */}
-      <main
+        <main
         ref={mainRef}
         style={{
           marginLeft: "240px",
@@ -76,8 +79,10 @@ export default function App() {
           height: "100vh",
           background: "#111",
           scrollBehavior: "smooth",
+          position: "relative",
         }}
-      >
+        >
+          <LanguageToggle />
         <div ref={registerSection("home")}>
           <HomeSection />
         </div>
@@ -142,7 +147,8 @@ export default function App() {
         <div ref={registerSection("contact")}>
           <ContactSection />
         </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </LanguageProvider>
   );
 }

@@ -41,7 +41,11 @@ app.post("/make-server-6c8ccaad/reviews", async (c) => {
     const { name, role, text, rating, avatar } = body;
 
     if (!name || !text) {
-      return c.json({ error: "name and text are required" }, 400);
+      return c.json({ error: "email and text are required" }, 400);
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(name).trim())) {
+      return c.json({ error: "A valid email is required" }, 400);
     }
 
     const id = Date.now();

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Palette, Box, Layers, BookOpen, Monitor, Film } from "lucide-react";
+import { useLanguage } from "../LanguageContext";
 
 const services = [
   {
@@ -150,6 +151,9 @@ function ServiceCard({ icon: Icon, title, description, tags }: ServiceCardProps)
 }
 
 export function ServicesSection() {
+  const { language } = useLanguage();
+  const isSpanish = language === "es";
+
   return (
     <section
       id="services"
@@ -184,7 +188,7 @@ export function ServicesSection() {
             marginBottom: "12px",
           }}
         >
-          What I Do
+          {isSpanish ? "Lo que hago" : "What I Do"}
         </p>
         <h2
           style={{
@@ -196,7 +200,7 @@ export function ServicesSection() {
             marginBottom: "16px",
           }}
         >
-          Services
+          {isSpanish ? "Servicios" : "Services"}
         </h2>
         <p
           style={{
@@ -206,7 +210,9 @@ export function ServicesSection() {
             lineHeight: 1.6,
           }}
         >
-          From concept to delivery — I offer a complete range of creative services tailored to your needs.
+          {isSpanish
+            ? "Desde el concepto hasta la entrega, ofrezco una gama completa de servicios creativos adaptados a tus necesidades."
+            : "From concept to delivery — I offer a complete range of creative services tailored to your needs."}
         </p>
       </div>
 

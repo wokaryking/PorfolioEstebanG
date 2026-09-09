@@ -1,7 +1,11 @@
 import { ArrowRight, Download } from "lucide-react";
 import profileImg from "../../imports/Perfilhomeporfolio.png";
+import { useLanguage } from "../LanguageContext";
 
 export function HomeSection() {
+  const { language } = useLanguage();
+  const isSpanish = language === "es";
+
   return (
     <section
       id="home"
@@ -61,7 +65,7 @@ export function HomeSection() {
               }}
             />
             <span style={{ color: "#F4B321", fontSize: "12px", letterSpacing: "0.08em", fontWeight: 500 }}>
-              Available for work
+              {isSpanish ? "Disponible para trabajar" : "Available for work"}
             </span>
           </div>
 
@@ -75,9 +79,9 @@ export function HomeSection() {
               letterSpacing: "-0.02em",
             }}
           >
-            Hi, I'm Esteban,
+            {isSpanish ? "Hola, soy Esteban," : "Hi, I'm Esteban,"}
             <br />
-            <span style={{ color: "#F4B321" }}>Graphic Designer</span>
+            <span style={{ color: "#F4B321" }}>{isSpanish ? "Diseñador Gráfico" : "Graphic Designer"}</span>
           </h1>
 
           <p
@@ -89,8 +93,9 @@ export function HomeSection() {
               maxWidth: "480px",
             }}
           >
-            I create stunning visual experiences through brand identity, 3D design, and digital composition.
-            Turning ideas into memorable, impactful designs that speak for themselves.
+            {isSpanish
+              ? "Creo experiencias visuales impactantes a través de identidad de marca, diseño 3D y composición digital. Convierto ideas en diseños memorables que hablan por sí mismos."
+              : "I create stunning visual experiences through brand identity, 3D design, and digital composition. Turning ideas into memorable, impactful designs that speak for themselves."}
           </p>
 
           <div style={{ display: "flex", gap: "16px", alignItems: "center", marginBottom: "64px" }}>
@@ -119,7 +124,7 @@ export function HomeSection() {
                 (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
               }}
             >
-              View My Work <ArrowRight size={16} />
+              {isSpanish ? "Ver mis proyectos" : "View My Work"} <ArrowRight size={16} />
             </button>
 
             <button
@@ -146,16 +151,16 @@ export function HomeSection() {
                 (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.7)";
               }}
             >
-              <Download size={16} /> Download CV
+              <Download size={16} /> {isSpanish ? "Descargar CV" : "Download CV"}
             </button>
           </div>
 
           {/* Stats */}
           <div style={{ display: "flex", gap: "48px" }}>
             {[
-              { value: "5+", label: "Years of Experience" },
-              { value: "120+", label: "Projects Completed" },
-              { value: "40+", label: "Happy Clients" },
+              { value: "5+", label: isSpanish ? "Años de experiencia" : "Years of Experience" },
+              { value: "120+", label: isSpanish ? "Proyectos completados" : "Projects Completed" },
+              { value: "40+", label: isSpanish ? "Clientes satisfechos" : "Happy Clients" },
             ].map((stat) => (
               <div key={stat.label}>
                 <div
