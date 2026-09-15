@@ -275,7 +275,7 @@ export const newsItems: NewsPost[] = [
     cover: tesisDniImg,
     externalUrl: "https://www.facebook.com/share/p/1MTAQtNs4o/",
   },
-  {
+/*   {
     id: "n2",
     title: "Colaboración con estudio de animación 3D",
     date: "10 Jul 2026",
@@ -290,7 +290,7 @@ export const newsItems: NewsPost[] = [
     shortDescription: "Abro inscripciones para un taller intensivo de modelado y render en Cinema 4D.",
     longDescription: "Próximamente dicto un taller intensivo de Cinema 4D orientado a diseñadores gráficos que quieren integrar el 3D en su flujo de trabajo. 8 horas en vivo, material descargable y acceso a la comunidad. Plazas limitadas.",
     externalUrl: "POST_URL",
-  },
+  }, */
 ];
 
 /* ── Project thumbnail card ── */
@@ -567,7 +567,7 @@ function NewsDetailModal({ post, onClose }: { post: NewsPost; onClose: () => voi
             rel="noopener noreferrer"
             style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "#F4B321", color: "#111", borderRadius: "8px", padding: "12px 24px", fontSize: "13px", fontWeight: 700, textDecoration: "none", transition: "background 0.2s" }}
           >
-            Read More →
+            Ver publicacion →
           </a>
         </div>
       </div>
