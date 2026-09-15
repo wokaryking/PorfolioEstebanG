@@ -127,7 +127,9 @@ export function HomeSection() {
               {isSpanish ? "Ver mis proyectos" : "View My Work"} <ArrowRight size={16} />
             </button>
 
-            <button
+            <a
+              href="/CV-Esteban-Guzman.pdf"
+              download="CV-Esteban-Guzman.pdf"
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -143,16 +145,16 @@ export function HomeSection() {
                 transition: "all 0.2s ease",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.4)";
-                (e.currentTarget as HTMLButtonElement).style.color = "#fff";
+                (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.4)";
+                (e.currentTarget as HTMLAnchorElement).style.color = "#fff";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.15)";
-                (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.7)";
+                (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.15)";
+                (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.7)";
               }}
             >
               <Download size={16} /> {isSpanish ? "Descargar CV" : "Download CV"}
-            </button>
+            </a>
           </div>
 
           {/* Stats */}

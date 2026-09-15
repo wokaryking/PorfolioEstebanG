@@ -12,6 +12,7 @@ import YciergImg from "../../imports/Yciergportda.png"
 import AviciiImg from "../../imports/aviciiportada.png"
 import microsoftImg from "../../imports/Microsoftportada.png"
 import yamahaImg from "../../imports/Yamahaportada.png"
+import tesisDniImg from "../../imports/Tesis-DNI.png"
 
 
 /* ── Project data ── */
@@ -73,13 +74,13 @@ const videoProjects: Project[] = [
     title: "Yamaha",
     category: "Video Editing",
     type: "video",
-    theme: "Música indie — Dirección creativa",
-    shortDescription: "Video musical creativo con transiciones sincronizadas, efectos visuales y color grading para artista independiente.",
-    longDescription: "Dirección y edición completa de un video musical para artista indie. El trabajo incluyó selección de tomas, sincronización con la música, aplicación de efectos visuales creativos y color grading expresivo que refuerza la narrativa de la canción.",
-    technologies: ["Premiere Pro", "After Effects"],
-    mediaKind: "youtube",
+    theme: "Publicidad — Video de marca",
+    shortDescription: "Creación de un video para Yamaha mediante composición gráfica y edición audiovisual con un enfoque visual moderno y dinámico.",
+    longDescription: "Creación de un video para Yamaha, desarrollado para comunicar la identidad de la marca a través de una propuesta audiovisual moderna y atractiva. El proyecto combina composición gráfica, edición de video y recursos visuales para construir una pieza clara, dinámica y alineada con la imagen de Yamaha.\n\nProceso: La composición visual fue realizada en Adobe Photoshop y la edición de video, los ajustes de ritmo y el montaje final se desarrollaron en Adobe After Effects.",
+    technologies: ["Adobe Photoshop", "Adobe After Effects"],
+    mediaKind: "video",
     mediaPoster: yamahaImg,
-    mediaUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    mediaUrl: "/videos/Yamaha.mp4",
   },
   /* {
     id: "v6",
@@ -153,7 +154,7 @@ const webProjects: Project[] = [
     mediaPoster: gamezoneImg,
     websiteUrl: "https://game-zone-player.netlify.app/",
   },
-  {
+ /*  {
     id: "w5",
     title: "Portfolio Template",
     category: "Web Design",
@@ -178,7 +179,7 @@ const webProjects: Project[] = [
     mediaKind: "web-preview",
     mediaUrl: "",
     websiteUrl: "#",
-  },
+  }, */
 ];
 
 const threeDProjects: Project[] = [
@@ -195,7 +196,7 @@ const threeDProjects: Project[] = [
     mediaPoster: radioImg,
     mediaUrl: "https://sketchfab.com/models/41d373739fd84506bf7d1d6ec9416941/embed?autospin=1&autostart=1&preload=1",
   },
-  {
+  /* {
     id: "3d2",
     title: "Product Visualization",
     category: "3D Design",
@@ -206,8 +207,8 @@ const threeDProjects: Project[] = [
     technologies: ["Cinema 4D", "Octane Render", "Photoshop"],
     mediaKind: "sketchfab",
     mediaUrl: "https://sketchfab.com/models/8cffcf6713eb4484bdc1e27b15c4980c/embed",
-  },
-  {
+  }, */
+ /*  {
     id: "3d3",
     title: "Game of Thrones",
     category: "3D Design",
@@ -218,8 +219,8 @@ const threeDProjects: Project[] = [
     technologies: ["Cinema 4D", "Redshift"],
     mediaKind: "sketchfab",
     mediaUrl: "https://sketchfab.com/models/41d373739fd84506bf7d1d6ec9416941/embed?autospin=1&autostart=1&preload=1",
-  },
-  {
+  }, */
+  /* {
     id: "3d4",
     title: "Abstract Art Series",
     category: "3D Design",
@@ -230,7 +231,7 @@ const threeDProjects: Project[] = [
     technologies: ["Cinema 4D", "Octane Render"],
     mediaKind: "sketchfab",
     mediaUrl: "https://sketchfab.com/models/41d373739fd84506bf7d1d6ec9416941/embed?autospin=1&autostart=1&preload=1",
-  },
+  }, */
   {
     id: "3d5",
     title: "Dragon",
@@ -267,11 +268,12 @@ export interface NewsPost {
 export const newsItems: NewsPost[] = [
   {
     id: "n1",
-    title: "Nuevo proyecto de identidad visual completado",
+    title: "Tesis-DNI",
     date: "18 Jul 2026",
-    shortDescription: "Entrega de brand identity completo para startup de tecnología financiera en Santo Domingo.",
-    longDescription: "Esta semana completamos el desarrollo de identidad visual para una fintech local. El proyecto incluyó logo, sistema tipográfico, paleta de color, papelería y guía de marca. Un trabajo que refleja confianza, modernidad y accesibilidad para el mercado latinoamericano.",
-    externalUrl: "https://bsky.app/profile/estebancodeg.bsky.social/post/3lj6orouumk25",
+    shortDescription: "Proyecto de tesis centrado en la identidad digital y la presentación visual del documento DNI.",
+    longDescription: "Este proyecto de tesis explora la presentación visual y la identidad asociada al documento de identidad nacional, combinando estrategia visual, diseño editorial y un enfoque creativo para reforzar la narrativa del concepto.",
+    cover: tesisDniImg,
+    externalUrl: "https://www.facebook.com/share/p/1MTAQtNs4o/",
   },
   {
     id: "n2",
@@ -387,6 +389,8 @@ function CategoryCard({ title, icon, color, projects, onSelectProject }: Categor
 
   /* Collapse: show 1 featured card. Explore: show all in grid */
   const visibleProjects = expanded ? projects : projects.slice(0, 1);
+  const totalCount = projects.length;
+  const hiddenCount = Math.max(0, totalCount - 1);
 
   return (
     <article
@@ -417,7 +421,9 @@ function CategoryCard({ title, icon, color, projects, onSelectProject }: Categor
           </div>
           <div>
             <h3 style={{ color: "#fff", fontSize: "15px", fontWeight: 600 }}>{title}</h3>
-            <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "11px" }}>{projects.length} proyectos</p>
+            <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "11px" }}>
+              {projects.length} proyecto{projects.length === 1 ? "" : "s"}
+            </p>
           </div>
         </div>
 
@@ -434,7 +440,7 @@ function CategoryCard({ title, icon, color, projects, onSelectProject }: Categor
             cursor: "pointer", transition: "all 0.2s",
           }}
         >
-          {expanded ? "Collapse" : "Explore"}
+          {expanded ? "Collapse" : `Explore (${totalCount})`}
         </button>
       </div>
 
@@ -455,18 +461,20 @@ function CategoryCard({ title, icon, color, projects, onSelectProject }: Categor
           ))}
         </div>
 
-        {!expanded && projects.length > 1 && (
+        {!expanded && totalCount > 1 && (
           <p style={{
             color: "rgba(255,255,255,0.2)", fontSize: "11px",
             marginTop: "12px", textAlign: "center",
           }}>
-            + {projects.length - 1} proyecto{projects.length - 1 !== 1 ? "s" : ""} más · <button
+            + {hiddenCount} proyecto{hiddenCount === 1 ? "" : "s"} más · <button
               onClick={() => setExpanded(true)}
               style={{
                 background: "none", border: "none",
                 color: color, fontSize: "11px", cursor: "pointer", padding: 0,
               }}
-            >Explorar todos</button>
+            >
+              Explorar todos ({totalCount})
+            </button>
           </p>
         )}
       </div>

@@ -4,11 +4,11 @@ import { useLanguage } from "../LanguageContext";
 
 const skills = [
  /*  { name: "Brand Identity", level: 50 }, */
-  { name: "3D Design (Cinema 4D)", level: 88 },
+  { name: "3D Design (Cinema 4D)", level: 90 },
   /* { name: "Photoshop Composition", level: 92 }, */
  /*  { name: "Editorial Design", level: 85 }, */
-  { name: "Web Design (Figma)", level: 90 },
-  { name: "Video Editing", level: 80 },
+  { name: "Web Design (Figma)", level: 80 },
+  { name: "Video Editing", level: 85 },
 ];
 
 const infoCards = [
@@ -176,12 +176,12 @@ export function AboutSection() {
             }}
           >
             {isSpanish
-              ? "Soy diseñador gráfico con más de 5 años de experiencia creando identidades de marca memorables, visuales 3D inmersivos y composiciones editoriales. Mi trabajo combina estética y estrategia; cada pieza busca conectar con su audiencia a un nivel más profundo."
-              : "I'm a graphic designer with over 5 years of experience creating memorable brand identities, immersive 3D visuals, and editorial compositions. My work combines aesthetics with strategy — every piece I create is crafted to connect with its audience on a deeper level."}
+              ? "Soy diseñador,y Estudiante del Intituto tecnologico de las america. Mi trabajo combina estética y estrategia; cada pieza busca conectar con su audiencia a un nivel más profundo."
+              : "I am a designer and a student at the Instituto Tecnológico de las Américas. My work combines aesthetics and strategy; each piece is designed to connect with its audience on a deeper level."}
             <br /><br />
             {isSpanish
-              ? "Trabajo con clientes que van desde startups creando su primera marca hasta empresas establecidas que buscan renovarse. Mi proceso es colaborativo, detallista y siempre guiado por la visión del cliente."
-              : "I work with clients ranging from startups building their first brand to established companies looking for a creative refresh. My process is collaborative, detail-oriented, and always driven by the client's vision."}
+              ? "Me identifico con el esfuerzo, la creatividad y la disciplina. Me gusta aprender cosas nuevas, diferentes y explorar otros campos. Puedo aprender varias cosas y mejorar continuamente."
+              : "I identify with effort, creativity, and discipline. I enjoy learning new, different things and exploring other fields. I’m able to learn many things and keep improving."}
           </p>
 
           {/* Skills */}
@@ -194,7 +194,7 @@ export function AboutSection() {
               letterSpacing: "0.01em",
             }}
           >
-            {isSpanish ? "Habilidades y experiencia" : "Skills & Expertise"}
+            {isSpanish ? "Últimos proyectos" :  "Recent Projects"}
           </h3>
           {skills.map((skill) => (
             <SkillBar key={skill.name} name={skill.name} level={skill.level} />

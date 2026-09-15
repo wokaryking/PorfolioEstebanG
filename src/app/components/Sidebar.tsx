@@ -39,6 +39,9 @@ interface Review {
 
 const fallbackReviews: Review[] = [];
 
+// Cambia a true para permitir el envío de reseñas.
+const ENABLE_REVIEW_SUBMISSION = false;
+
 function StarRating({ rating, size = 12 }: { rating: number; size?: number }) {
   return (
     <div style={{ display: "flex", gap: "2px" }}>
@@ -125,6 +128,7 @@ function ReviewsModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!ENABLE_REVIEW_SUBMISSION) return;
     if (!email.trim() || !text.trim()) return;
     setSubmitting(true);
     setError("");
@@ -356,19 +360,19 @@ function ReviewsModal({
                   </div>
                   <button
                     type="submit"
-                    disabled={submitting}
+                    disabled={submitting || !ENABLE_REVIEW_SUBMISSION}
                     style={{
                       display: "flex",
                       alignItems: "center",
                       gap: "6px",
-                      background: submitting ? "rgba(244,179,33,0.5)" : "#F4B321",
+                      background: submitting || !ENABLE_REVIEW_SUBMISSION ? "rgba(244,179,33,0.5)" : "#F4B321",
                       border: "none",
                       borderRadius: "8px",
                       padding: "8px 16px",
                       color: "#111", /*  */
                       fontSize: "13px",
                       fontWeight: 600,
-                      cursor: submitting ? "not-allowed" : "pointer",
+                      cursor: submitting || !ENABLE_REVIEW_SUBMISSION ? "not-allowed" : "pointer",
                     }}
                   >
                     {submitting ? <Loader2 size={13} style={{ animation: "spin 1s linear infinite" }} /> : <Send size={13} />}
@@ -440,7 +444,7 @@ function ReviewsTicker({ reviews, onOpenModal }: { reviews: Review[]; onOpenModa
           Clientes
         </span>
         <button
-          onClick={onOpenModal}
+          onClick={onOpenModal}     /* comentar para bloquear reseñas */
           style={{
             background: "none",
             border: "1px solid rgba(244,179,33,0.3)",
