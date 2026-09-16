@@ -56,6 +56,7 @@ export default function App() {
   return (
     <LanguageProvider>
       <div
+      className="portfolio-shell"
       style={{
         display: "flex",
         height: "100vh",
@@ -71,6 +72,7 @@ export default function App() {
       {/* Scrollable Main Content */}
         <main
         ref={mainRef}
+        className="portfolio-main"
         style={{
           marginLeft: "240px",
           flex: 1,
@@ -89,6 +91,7 @@ export default function App() {
 
         {/* Section divider */}
         <div
+          className="section-divider"
           style={{
             height: "1px",
             background: "rgba(255,255,255,0.05)",
@@ -101,6 +104,7 @@ export default function App() {
         </div>
 
         <div
+          className="section-divider"
           style={{
             height: "1px",
             background: "rgba(255,255,255,0.05)",
@@ -113,6 +117,7 @@ export default function App() {
         </div>
 
         <div
+          className="section-divider"
           style={{
             height: "1px",
             background: "rgba(255,255,255,0.05)",
@@ -125,6 +130,7 @@ export default function App() {
         </div>
 
         <div
+          className="section-divider"
           style={{
             height: "1px",
             background: "rgba(255,255,255,0.05)",
@@ -137,6 +143,7 @@ export default function App() {
         </div>
 
         <div
+          className="section-divider"
           style={{
             height: "1px",
             background: "rgba(255,255,255,0.05)",

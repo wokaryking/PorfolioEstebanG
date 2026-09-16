@@ -60,6 +60,7 @@ export function AboutSection() {
   return (
     <section
       id="about"
+      className="about-section"
       style={{
         minHeight: "100vh",
         padding: "100px 80px 100px 60px",
@@ -67,7 +68,7 @@ export function AboutSection() {
       }}
     >
       {/* Section label */}
-      <div style={{ marginBottom: "60px" }}>
+      <div className="section-heading" style={{ marginBottom: "60px" }}>
         <p
           style={{
             color: "#F4B321",
@@ -81,6 +82,7 @@ export function AboutSection() {
           {isSpanish ? "Sobre mí" : "About Me"}
         </p>
         <h2
+          className="section-title"
           style={{
             color: "#fff",
             fontSize: "52px",
@@ -96,11 +98,12 @@ export function AboutSection() {
         </h2>
       </div>
 
-      <div style={{ display: "flex", gap: "80px", alignItems: "flex-start" }}>
+      <div className="about-layout" style={{ display: "flex", gap: "80px", alignItems: "flex-start" }}>
         {/* Left — Portrait + Info Cards */}
-        <div style={{ flexShrink: 0 }}>
+        <div className="about-media" style={{ flexShrink: 0 }}>
           {/* Portrait */}
           <div
+            className="about-portrait"
             style={{
               width: "320px",
               height: "380px",
@@ -123,8 +126,8 @@ export function AboutSection() {
                 inset: 0,
                 width: "100%",
                 height: "100%",
-                objectFit: "contain",
-                objectPosition: "center bottom",
+                objectFit: "cover",
+                objectPosition: "72% center",
                 zIndex: 1,
               }}
             />
@@ -144,7 +147,7 @@ export function AboutSection() {
           </div>
 
           {/* Info Cards Grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", width: "320px" }}>
+          <div className="about-info-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", width: "320px" }}>
             {infoCards.map((card) => (
               <div
                 key={card.label}
@@ -165,7 +168,7 @@ export function AboutSection() {
         </div>
 
         {/* Right — Description + Skills */}
-        <div style={{ flex: 1 }}>
+        <div className="about-copy" style={{ flex: 1 }}>
           <p
             style={{
               color: "rgba(255,255,255,0.6)",

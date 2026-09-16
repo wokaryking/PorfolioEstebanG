@@ -8,6 +8,7 @@ export function LanguageToggle() {
 
   return (
     <div
+      className="language-toggle"
       role="group"
       aria-label="Seleccionar idioma / Select language"
       style={{

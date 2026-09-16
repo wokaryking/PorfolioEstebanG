@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Play, Globe, Box, Newspaper } from "lucide-react";
+import { Play, Globe, Box, X, ArrowRight } from "lucide-react";
 import { ProjectModal, type Project } from "./ProjectModal";
 import laCocinaImg from "../../imports/la_cosina_de_jeremy.png";
 import pokemonImg from "../../imports/web-pokemon.png";
@@ -13,6 +13,10 @@ import AviciiImg from "../../imports/aviciiportada.png"
 import microsoftImg from "../../imports/Microsoftportada.png"
 import yamahaImg from "../../imports/Yamahaportada.png"
 import tesisDniImg from "../../imports/Tesis-DNI.png"
+import threeDIcon from "../../imports/icons/3d-model-ico.png";
+import newsIcon from "../../imports/icons/news-ico.png";
+import videoIcon from "../../imports/icons/video-ico.png";
+import webIcon from "../../imports/icons/web-ico.png";
 
 
 /* ── Project data ── */
@@ -299,6 +303,7 @@ function ProjectThumb({ project, onClick }: { project: Project; onClick: () => v
 
   return (
     <button
+      className="project-thumb-card"
       onClick={onClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -343,9 +348,13 @@ function ProjectThumb({ project, onClick }: { project: Project; onClick: () => v
             position: "absolute", inset: 0,
             display: "flex", alignItems: "center", justifyContent: "center",
           }}>
-            <span style={{ fontSize: "22px", opacity: 0.2 }}>
-              {project.type === "video" ? "▶" : project.type === "web" ? "🌐" : "🎲"}
-            </span>
+            {project.type === "video" ? (
+              <Play size={22} strokeWidth={1.5} color="rgba(255,255,255,0.2)" />
+            ) : project.type === "web" ? (
+              <Globe size={22} strokeWidth={1.5} color="rgba(255,255,255,0.2)" />
+            ) : (
+              <Box size={22} strokeWidth={1.5} color="rgba(255,255,255,0.2)" />
+            )}
           </div>
         )}
         {/* Hover overlay */}
@@ -394,6 +403,7 @@ function CategoryCard({ title, icon, color, projects, onSelectProject }: Categor
 
   return (
     <article
+      className="category-card"
       style={{
         background: "#111",
         border: "1px solid rgba(255,255,255,0.06)",
@@ -405,7 +415,7 @@ function CategoryCard({ title, icon, color, projects, onSelectProject }: Categor
       }}
     >
       {/* Header */}
-      <div style={{
+      <div className="category-card-header" style={{
         padding: "24px 24px 20px",
         borderBottom: "1px solid rgba(255,255,255,0.05)",
         display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -445,8 +455,8 @@ function CategoryCard({ title, icon, color, projects, onSelectProject }: Categor
       </div>
 
       {/* Project grid */}
-      <div style={{ padding: "18px 24px 24px", flex: 1 }}>
-        <div style={{
+      <div className="category-card-body" style={{ padding: "18px 24px 24px", flex: 1 }}>
+        <div className={`project-thumb-grid ${expanded ? "is-expanded" : "is-collapsed"}`} style={{
           display: "grid",
           gridTemplateColumns: expanded ? "repeat(3, 1fr)" : "1fr",
           gap: "10px",
@@ -488,6 +498,7 @@ function NewsThumb({ post, onClick }: { post: NewsPost; onClick: () => void }) {
   const [hovered, setHovered] = useState(false);
   return (
     <button
+      className="news-thumb-card"
       onClick={onClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -506,7 +517,7 @@ function NewsThumb({ post, onClick }: { post: NewsPost; onClick: () => void }) {
           <img src={post.cover} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
         ) : (
           <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <span style={{ fontSize: "22px", opacity: 0.2 }}>📰</span>
+            <img className="custom-project-icon" src={newsIcon} alt="" width={22} height={22} style={{ objectFit: "contain" }} />
           </div>
         )}
         {hovered && (
@@ -528,13 +539,14 @@ function NewsThumb({ post, onClick }: { post: NewsPost; onClick: () => void }) {
 function NewsDetailModal({ post, onClose }: { post: NewsPost; onClose: () => void }) {
   return (
     <div
+      className="news-modal-overlay"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
       style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.88)", backdropFilter: "blur(8px)", zIndex: 1000, display: "flex", alignItems: "center", justifyContent: "center", padding: "40px" }}
     >
-      <div style={{ background: "#141414", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "20px", width: "100%", maxWidth: "720px", maxHeight: "90vh", overflow: "hidden", display: "flex", flexDirection: "column", position: "relative" }}>
+      <div className="news-modal" style={{ background: "#141414", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "20px", width: "100%", maxWidth: "720px", maxHeight: "90vh", overflow: "hidden", display: "flex", flexDirection: "column", position: "relative" }}>
         {/* Close */}
         <button onClick={onClose} style={{ position: "absolute", top: "16px", right: "16px", width: "32px", height: "32px", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", color: "rgba(255,255,255,0.6)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 10 }}>
-          ✕
+          <X size={15} />
         </button>
 
         {/* Cover image — always <img> */}
@@ -543,13 +555,13 @@ function NewsDetailModal({ post, onClose }: { post: NewsPost; onClose: () => voi
             <img src={post.cover} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
           ) : (
             <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <span style={{ fontSize: "48px", opacity: 0.15 }}>📰</span>
+              <img className="custom-project-icon" src={newsIcon} alt="" width={48} height={48} style={{ objectFit: "contain" }} />
             </div>
           )}
         </div>
 
         {/* Content */}
-        <div style={{ padding: "28px 32px 32px", overflow: "auto" }}>
+        <div className="news-modal-content" style={{ padding: "28px 32px 32px", overflow: "auto" }}>
           <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "12px", marginBottom: "8px", letterSpacing: "0.06em" }}>{post.date}</p>
           <h3 style={{ color: "#fff", fontSize: "22px", fontWeight: 700, letterSpacing: "-0.01em", marginBottom: "20px", lineHeight: 1.2 }}>
             {post.title}
@@ -567,7 +579,7 @@ function NewsDetailModal({ post, onClose }: { post: NewsPost; onClose: () => voi
             rel="noopener noreferrer"
             style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "#F4B321", color: "#111", borderRadius: "8px", padding: "12px 24px", fontSize: "13px", fontWeight: 700, textDecoration: "none", transition: "background 0.2s" }}
           >
-            Ver publicacion →
+            Ver publicacion <ArrowRight size={15} />
           </a>
         </div>
       </div>
@@ -593,12 +605,12 @@ function NewsCategoryCard({ items }: { items: NewsPost[] }) {
 
   return (
     <>
-      <article style={{ background: "#111", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "16px", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+      <article className="category-card news-card" style={{ background: "#111", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "16px", overflow: "hidden", display: "flex", flexDirection: "column" }}>
         {/* Header */}
-        <div style={{ padding: "24px 24px 20px", borderBottom: "1px solid rgba(255,255,255,0.05)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div className="category-card-header" style={{ padding: "24px 24px 20px", borderBottom: "1px solid rgba(255,255,255,0.05)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
             <div style={{ width: "40px", height: "40px", background: "rgba(34,197,94,0.12)", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center", color: "#4ade80" }}>
-              <Newspaper size={18} />
+              <img className="custom-project-icon" src={newsIcon} alt="" width={18} height={18} style={{ objectFit: "contain" }} />
             </div>
             <div>{/* era blanco el color */}
               <h3 style={{ color: "#ffff", fontSize: "15px", fontWeight: 600 }}>News</h3>
@@ -608,6 +620,7 @@ function NewsCategoryCard({ items }: { items: NewsPost[] }) {
           <button
             onClick={() => setExpanded(!expanded)}
             aria-expanded={expanded}
+            className="toggle-view"
             style={{ background: expanded ? "rgba(34,197,94,0.12)" : "rgba(255,255,255,0.04)", border: `1px solid ${expanded ? "rgba(34,197,94,0.3)" : "rgba(255,255,255,0.08)"}`, borderRadius: "8px", color: expanded ? "#4ade80" : "rgba(255,255,255,0.5)", padding: "5px 14px", fontSize: "12px", fontWeight: 500, cursor: "pointer", transition: "all 0.2s" }}
           >
             {expanded ? "Collapse" : "Explore"}
@@ -615,7 +628,7 @@ function NewsCategoryCard({ items }: { items: NewsPost[] }) {
         </div>
 
         {/* Body */}
-        <div style={{ padding: "18px 24px 24px", flex: 1 }}>
+        <div className="category-card-body" style={{ padding: "18px 24px 24px", flex: 1 }}>
           {!expanded ? (
             /* Collapse: auto-rotating featured post */
             <button
@@ -627,7 +640,7 @@ function NewsCategoryCard({ items }: { items: NewsPost[] }) {
                   <img src={featured.cover} alt={featured.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                 ) : (
                   <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <span style={{ fontSize: "28px", opacity: 0.15 }}>📰</span>
+                    <img className="custom-project-icon" src={newsIcon} alt="" width={28} height={28} style={{ objectFit: "contain" }} />
                   </div>
                 )}
                 {/* NEW badge on newest */}
@@ -642,7 +655,7 @@ function NewsCategoryCard({ items }: { items: NewsPost[] }) {
             </button>
           ) : (
             /* Explore: full grid */
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "10px" }}>
+            <div className="news-thumb-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "10px" }}>
               {items.map((post) => (
                 <div key={post.id} style={{ position: "relative" }}>
                   {post.id === newest.id && (
@@ -679,16 +692,16 @@ export function ProjectsSection() {
   };
 
   return (
-    <section id="projects" style={{ minHeight: "100vh", padding: "100px 80px 100px 60px" }}>
+    <section id="projects" className="projects-section" style={{ minHeight: "100vh", padding: "100px 80px 100px 60px" }}>
       {/* Header */}
-      <div style={{ marginBottom: "52px" }}>
+      <div className="section-heading" style={{ marginBottom: "52px" }}>
         <p style={{ color: "#F4B321", fontSize: "12px", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 600, marginBottom: "12px" }}>
           Mi trabajo
         </p>
-        <h2 style={{ color: "#fff", fontSize: "52px", fontWeight: 700, letterSpacing: "-0.02em", lineHeight: 1.1, marginBottom: "14px" }}>
+        <h2 className="section-title" style={{ color: "#fff", fontSize: "52px", fontWeight: 700, letterSpacing: "-0.02em", lineHeight: 1.1, marginBottom: "14px" }}>
           Proyectos
         </h2>
-        <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "15px", maxWidth: "480px", lineHeight: 1.6 }}>
+        <p className="section-description" style={{ color: "rgba(255,255,255,0.4)", fontSize: "15px", maxWidth: "480px", lineHeight: 1.6 }}>
           Selección de trabajos en video, diseño web y visualización 3D.
           Haz click en <strong style={{ color: "rgba(255,255,255,0.6)" }}>Explore</strong> para ver todos los proyectos de cada categoría,
           luego click en un proyecto para verlo en detalle.
@@ -698,6 +711,7 @@ export function ProjectsSection() {
       {/* Category cards */}
       {/* <div style={{ display: "flex", gap: "20px" }}> */}
       <div
+        className="projects-category-grid"
   style={{
     display: "grid",
     gridTemplateColumns: "repeat(2, 1fr)",
@@ -707,21 +721,21 @@ export function ProjectsSection() {
         <NewsCategoryCard items={newsItems} />
         <CategoryCard
           title="Video Editing"
-          icon={<Play size={18} />}
+          icon={<img className="custom-project-icon" src={videoIcon} alt="" width={18} height={18} style={{ objectFit: "contain" }} />}
           color="#F4B321"
           projects={videoProjects}
           onSelectProject={handleSelectProject}
         />
         <CategoryCard
           title="Diseños Web"
-          icon={<Globe size={18} />}
+          icon={<img className="custom-project-icon" src={webIcon} alt="" width={18} height={18} style={{ objectFit: "contain" }} />}
           color="#60a5fa"
           projects={webProjects}
           onSelectProject={handleSelectProject}
         />
         <CategoryCard
           title="Diseños 3D"
-          icon={<Box size={18} />}
+          icon={<img className="custom-project-icon" src={threeDIcon} alt="" width={18} height={18} style={{ objectFit: "contain" }} />}
           color="#a78bfa"
           projects={threeDProjects}
           onSelectProject={handleSelectProject}

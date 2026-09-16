@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { Github, Twitter, Instagram, Linkedin, Youtube, Star, X, Send, ChevronUp, ChevronDown, Loader2 } from "lucide-react";
+import { Github, Twitter, Instagram, Linkedin, Youtube, Star, X, Send, ChevronUp, ChevronDown, Loader2, Menu } from "lucide-react";
 import { projectId, publicAnonKey } from "/utils/supabase/info";
 import { useLanguage } from "../LanguageContext";
 
@@ -61,6 +61,7 @@ function StarRating({ rating, size = 12 }: { rating: number; size?: number }) {
 function ReviewCard({ review }: { review: Review }) {
   return (
     <div
+      className="reviews-modal-overlay"
       style={{
         padding: "10px 12px",
         background: "rgba(244,179,33,0.04)",/*255,0,0  */
@@ -182,6 +183,7 @@ function ReviewsModal({
       onClick={onClose}
     >
       <div
+        className="reviews-modal"
         style={{
           width: "500px",
           maxWidth: "92vw",
@@ -197,6 +199,7 @@ function ReviewsModal({
       >
         {/* Header */}
         <div
+          className="reviews-modal-header"
           style={{
             padding: "20px 24px",
             borderBottom: "1px solid rgba(255,255,255,0.07)",
@@ -311,7 +314,7 @@ function ReviewsModal({
               </div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                <div style={{ display: "flex", gap: "10px" }}>
+                <div className="reviews-form-row" style={{ display: "flex", gap: "10px" }}>
                   <input
                     type="email"
                     style={inputStyle}
@@ -427,6 +430,7 @@ function ReviewsTicker({ reviews, onOpenModal }: { reviews: Review[]; onOpenModa
 
   return (
     <div
+      className="reviews-ticker"
       style={{
         flex: 1,
         minHeight: 0,
@@ -495,6 +499,7 @@ function ReviewsTicker({ reviews, onOpenModal }: { reviews: Review[]; onOpenModa
 }
 
 export function Sidebar({ activeSection, onNavClick }: SidebarProps) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { language } = useLanguage();
   const [reviews, setReviews] = useState<Review[]>(fallbackReviews);
   const [modalOpen, setModalOpen] = useState(false);
@@ -539,7 +544,7 @@ export function Sidebar({ activeSection, onNavClick }: SidebarProps) {
   return (
     <>
       <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
-      <aside className="mx-[0px] my-0"
+      <aside className="desktop-sidebar mx-[0px] my-0"
         style={{
           width: "240px",
           minWidth: "240px",
@@ -558,7 +563,7 @@ export function Sidebar({ activeSection, onNavClick }: SidebarProps) {
         }}
       >
         {/* Logo */}
-        <div style={{ marginBottom: "36px", flexShrink: 0 }}>
+        <div className="sidebar-logo-wrap" style={{ marginBottom: "36px", flexShrink: 0 }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <div
               style={{
@@ -577,18 +582,44 @@ export function Sidebar({ activeSection, onNavClick }: SidebarProps) {
             >
               P
             </div>
-            <span style={{ color: "#fff", fontSize: "18px", fontWeight: 600, letterSpacing: "0.02em" }}>
+            <span className="sidebar-logo-text" style={{ color: "#fff", fontSize: "18px", fontWeight: 600, letterSpacing: "0.02em" }}>
               Portfolio
             </span>
           </div>
         </div>
 
         {/* Navigation */}
-        <nav style={{ display: "flex", flexDirection: "column", gap: "4px", flexShrink: 0 }}>
+        <button
+          className="sidebar-menu-toggle"
+          type="button"
+          aria-label="Abrir menú de navegación"
+          aria-expanded={mobileMenuOpen}
+          onClick={() => setMobileMenuOpen((open) => !open)}
+          style={{
+            display: "none",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "40px",
+            height: "40px",
+            marginLeft: "auto",
+            background: "rgba(255,255,255,0.06)",
+            border: "1px solid rgba(255,255,255,0.1)",
+            borderRadius: "8px",
+            color: "#fff",
+            cursor: "pointer",
+          }}
+        >
+          <Menu size={20} />
+        </button>
+
+        <nav className={`sidebar-nav${mobileMenuOpen ? " is-open" : ""}`} style={{ display: "flex", flexDirection: "column", gap: "4px", flexShrink: 0 }}>
           {navItems.map((item) => (
             <button
               key={item.id}
-              onClick={() => onNavClick(item.id)}
+              onClick={() => {
+                onNavClick(item.id);
+                setMobileMenuOpen(false);
+              }}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -622,6 +653,7 @@ export function Sidebar({ activeSection, onNavClick }: SidebarProps) {
             >
               {activeSection === item.id && (
                 <span
+                  className="sidebar-active-indicator"
                   style={{
                     width: "3px",   
                     height: "20px",
@@ -643,7 +675,7 @@ export function Sidebar({ activeSection, onNavClick }: SidebarProps) {
         <ReviewsTicker reviews={reviews} onOpenModal={() => setModalOpen(true)} />
 
         {/* Social Icons */}
-        <div style={{ flexShrink: 0, marginTop: "auto" }}>
+        <div className="sidebar-social" style={{ flexShrink: 0, marginTop: "auto" }}>
           <p
             style={{
               fontSize: "11px",

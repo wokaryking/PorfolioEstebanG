@@ -41,6 +41,7 @@ function ContactModal({ isSpanish, onClose }: { isSpanish: boolean; onClose: () 
 
   return (
     <div
+      className="contact-modal-overlay"
       role="dialog"
       aria-modal="true"
       aria-labelledby="contact-modal-title"
@@ -58,6 +59,7 @@ function ContactModal({ isSpanish, onClose }: { isSpanish: boolean; onClose: () 
       }}
     >
       <div
+        className="contact-modal"
         onClick={(event) => event.stopPropagation()}
         style={{
           width: "min(520px, 100%)",
@@ -115,6 +117,7 @@ export function ContactSection() {
   return (
     <section
       id="contact"
+      className="contact-section"
       style={{
         padding: "100px 80px 0 60px",
         position: "relative",
@@ -122,6 +125,7 @@ export function ContactSection() {
     >
       {/* CTA Block */}
       <div
+        className="contact-cta"
         style={{
           background: "#0f0f0f",
           border: "1px solid rgba(255,255,255,0.06)",
@@ -161,6 +165,7 @@ export function ContactSection() {
         </p>
 
         <h2
+          className="contact-title"
           style={{
             color: "#fff",
             fontSize: "56px",
@@ -176,6 +181,7 @@ export function ContactSection() {
         </h2>
 
         <p
+          className="contact-description"
           style={{
             color: "rgba(255,255,255,0.45)",
             fontSize: "16px",
@@ -189,7 +195,7 @@ export function ContactSection() {
             : "Have a project in mind? Let's connect and create something that sets you apart from the crowd."}
         </p>
 
-        <div style={{ display: "flex", gap: "16px", justifyContent: "center", marginBottom: "48px" }}>
+        <div className="contact-actions" style={{ display: "flex", gap: "16px", justifyContent: "center", marginBottom: "48px" }}>
           <button
             type="button"
             onClick={() => setContactModalOpen(true)}
@@ -264,6 +270,7 @@ export function ContactSection() {
             Trusted by International Brands
           </p>
           <div
+            className="trusted-brands"
             style={{
               display: "flex",
               gap: "32px",
@@ -294,6 +301,7 @@ export function ContactSection() {
 
       {/* Footer */}
       <footer
+        className="site-footer"
         style={{
           borderTop: "1px solid rgba(255,255,255,0.06)",
           padding: "40px 0 40px",

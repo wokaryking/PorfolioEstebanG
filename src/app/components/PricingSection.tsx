@@ -70,6 +70,7 @@ function PricingCard({ plan }: PricingCardProps) {
 
   return (
     <div
+      className="pricing-card"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -246,6 +247,7 @@ export function PricingSection() {
   return (
     <section
       id="pricing"
+      className="pricing-section"
       style={{
         minHeight: "100vh",
         padding: "100px 80px 100px 60px",
@@ -265,7 +267,7 @@ export function PricingSection() {
       />
 
       {/* Header */}
-      <div style={{ marginBottom: "64px" }}>
+      <div className="section-heading" style={{ marginBottom: "64px" }}>
         <p
           style={{
             color: "#F4B321",
@@ -279,6 +281,7 @@ export function PricingSection() {
           {isSpanish ? "Inversión" : "Investment"}
         </p>
         <h2
+          className="section-title"
           style={{
             color: "#fff",
             fontSize: "52px",
@@ -291,6 +294,7 @@ export function PricingSection() {
           {isSpanish ? "Mis planes de precios" : "My Pricing Plan"}
         </h2>
         <p
+          className="section-description"
           style={{
             color: "rgba(255,255,255,0.45)",
             fontSize: "15px",
@@ -306,6 +310,7 @@ export function PricingSection() {
 
       {/* Cards */}
       <div
+        className="pricing-grid"
         style={{
           display: "flex",
           gap: "24px",

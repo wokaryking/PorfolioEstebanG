@@ -59,6 +59,7 @@ function ServiceCard({ icon: Icon, title, description, tags }: ServiceCardProps)
 
   return (
     <div
+      className="service-card"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -157,6 +158,7 @@ export function ServicesSection() {
   return (
     <section
       id="services"
+      className="services-section"
       style={{
         minHeight: "100vh",
         padding: "100px 80px 100px 60px",
@@ -177,7 +179,7 @@ export function ServicesSection() {
       />
 
       {/* Header */}
-      <div style={{ marginBottom: "60px" }}>
+      <div className="section-heading" style={{ marginBottom: "60px" }}>
         <p
           style={{
             color: "#F4B321",
@@ -191,6 +193,7 @@ export function ServicesSection() {
           {isSpanish ? "Lo que hago" : "What I Do"}
         </p>
         <h2
+          className="section-title"
           style={{
             color: "#fff",
             fontSize: "52px",
@@ -203,6 +206,7 @@ export function ServicesSection() {
           {isSpanish ? "Servicios" : "Services"}
         </h2>
         <p
+          className="section-description"
           style={{
             color: "rgba(255,255,255,0.45)",
             fontSize: "15px",
@@ -218,6 +222,7 @@ export function ServicesSection() {
 
       {/* Grid */}
       <div
+        className="services-grid"
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(3, 1fr)",

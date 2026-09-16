@@ -9,6 +9,7 @@ export function HomeSection() {
   return (
     <section
       id="home"
+      className="home-section"
       style={{
         minHeight: "100vh",
         display: "flex",
@@ -20,6 +21,7 @@ export function HomeSection() {
     >
       {/* Background accent */}
       <div
+        className="home-accent"
         style={{
           position: "absolute",
           top: "-200px",
@@ -32,6 +34,7 @@ export function HomeSection() {
       />
 
       <div
+        className="home-layout"
         style={{
           display: "flex",
           alignItems: "center",
@@ -42,7 +45,7 @@ export function HomeSection() {
         }}
       >
         {/* Left Content */}
-        <div style={{ flex: 1, maxWidth: "600px" }}>
+        <div className="home-copy" style={{ flex: 1, maxWidth: "600px" }}>
           <div
             style={{
               display: "inline-flex",
@@ -70,6 +73,7 @@ export function HomeSection() {
           </div>
 
           <h1
+            className="home-title"
             style={{
               color: "#fff",
               fontSize: "64px",
@@ -85,6 +89,7 @@ export function HomeSection() {
           </h1>
 
           <p
+            className="home-description"
             style={{
               color: "rgba(255,255,255,0.55)",
               fontSize: "16px",
@@ -98,7 +103,7 @@ export function HomeSection() {
               : "I create stunning visual experiences through brand identity, 3D design, and digital composition. Turning ideas into memorable, impactful designs that speak for themselves."}
           </p>
 
-          <div style={{ display: "flex", gap: "16px", alignItems: "center", marginBottom: "64px" }}>
+          <div className="home-actions" style={{ display: "flex", gap: "16px", alignItems: "center", marginBottom: "64px" }}>
             <button
               style={{
                 display: "flex",
@@ -158,7 +163,7 @@ export function HomeSection() {
           </div>
 
           {/* Stats */}
-          <div style={{ display: "flex", gap: "48px" }}>
+          <div className="home-stats" style={{ display: "flex", gap: "48px" }}>
             {[
               { value: "5+", label: isSpanish ? "Años de experiencia" : "Years of Experience" },
               { value: "120+", label: isSpanish ? "Proyectos completados" : "Projects Completed" },
@@ -186,9 +191,10 @@ export function HomeSection() {
         </div>
 
         {/* Right — Profile Photo */}
-        <div style={{ position: "relative", flexShrink: 0 }}>
+        <div className="home-visual" style={{ position: "relative", flexShrink: 0 }}>
           {/* Outer glow ring */}
           <div
+            className="home-photo-frame"
             style={{
               width: "420px",
               height: "520px",
@@ -229,6 +235,7 @@ export function HomeSection() {
 
           {/* Floating badge */}
           <div
+            className="home-floating-badge"
             style={{
               position: "absolute",
               bottom: "40px",
@@ -267,6 +274,7 @@ export function HomeSection() {
 
           {/* Floating experience card */}
           <div
+            className="home-experience-card"
             style={{
               position: "absolute",
               top: "40px",

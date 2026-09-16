@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { X, ChevronLeft, ChevronRight, ExternalLink, ArrowLeft, Play } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, ExternalLink, ArrowLeft, Play, Globe, Box } from "lucide-react";
 
 export type ModalType = "video" | "web" | "3d";
 export type MediaKind = "video" | "youtube" | "gdrive" | "sketchfab" | "image" | "web-preview";
@@ -91,7 +91,7 @@ function MediaPlayer({ project }: { project: Project }) {
   if (project.mediaKind === "web-preview") {
     return (
       <a
-        href={project.websiteUrl ?? "#"}
+        href={project.websiteUrl && project.websiteUrl !== "#" ? project.websiteUrl : undefined}
         target="_blank"
         rel="noopener noreferrer"
         className="website-preview"
@@ -112,7 +112,7 @@ function MediaPlayer({ project }: { project: Project }) {
             alignItems: "center", justifyContent: "center", gap: "12px",
             background: "#0a0a0a",
           }}>
-            <span style={{ fontSize: "40px", opacity: 0.2 }}>🌐</span>
+            <Globe size={40} strokeWidth={1.5} color="rgba(255,255,255,0.2)" />
             <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "12px", letterSpacing: "0.1em" }}>
               WEBSITE PREVIEW
             </span>
@@ -139,7 +139,7 @@ function MediaPlayer({ project }: { project: Project }) {
 /* ── Thumbnail for Visualizar mode ── */
 function MediaThumb({ project }: { project: Project }) {
   return (
-    <div style={{
+    <div className="media-thumb" style={{
       width: "100%", height: "200px", background: "#0a0a0a",
       borderRadius: "10px", overflow: "hidden",
       display: "flex", alignItems: "center", justifyContent: "center",
@@ -152,9 +152,13 @@ function MediaThumb({ project }: { project: Project }) {
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
       ) : (
-        <span style={{ fontSize: "40px", opacity: 0.2 }}>
-          {project.type === "video" ? "▶" : project.type === "web" ? "🌐" : "🎲"}
-        </span>
+        project.type === "video" ? (
+          <Play size={40} strokeWidth={1.5} color="rgba(255,255,255,0.2)" />
+        ) : project.type === "web" ? (
+          <Globe size={40} strokeWidth={1.5} color="rgba(255,255,255,0.2)" />
+        ) : (
+          <Box size={40} strokeWidth={1.5} color="rgba(255,255,255,0.2)" />
+        )
       )}
       <div style={{
         position: "absolute", inset: 0,
@@ -171,10 +175,16 @@ export function ProjectModal({ project, projects, currentIndex, onClose, onNavig
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
     return () => {
+      window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = previousOverflow;
     };
-  }, []);
+  }, [onClose]);
 
   const handlePrev = () => {
     const i = currentIndex > 0 ? currentIndex - 1 : projects.length - 1;
@@ -189,6 +199,7 @@ export function ProjectModal({ project, projects, currentIndex, onClose, onNavig
 
   return (
     <div
+      className="project-modal-overlay"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
       style={{
         position: "fixed", inset: 0,
@@ -202,7 +213,7 @@ export function ProjectModal({ project, projects, currentIndex, onClose, onNavig
     >
       {mode === "visualizar" ? (
         /* ── VISUALIZAR MODE ── */
-        <div style={{
+        <div className="project-preview-modal" style={{
           background: "#141414",
           border: "1px solid rgba(255,255,255,0.08)",
           borderRadius: "20px",
@@ -215,7 +226,7 @@ export function ProjectModal({ project, projects, currentIndex, onClose, onNavig
             <X size={15} />
           </button>
 
-          <div style={{ padding: "32px" }}>
+          <div className="project-preview-body" style={{ padding: "32px" }}>
             {/* Thumbnail */}
             <MediaThumb project={project} />
 
@@ -245,7 +256,7 @@ export function ProjectModal({ project, projects, currentIndex, onClose, onNavig
               </div>
 
               {/* Actions */}
-              <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+              <div className="project-preview-actions" style={{ display: "flex", gap: "10px", alignItems: "center" }}>
                 <button
                   onClick={() => setMode("grande")}
                   style={{
@@ -263,8 +274,12 @@ export function ProjectModal({ project, projects, currentIndex, onClose, onNavig
                   {project.type === "video" ? "Reproducir" : project.type === "web" ? "Ver proyecto" : "Ver en 3D"}
                 </button>
 
-                <button onClick={handlePrev} style={navBtnStyle}>←</button>
-                <button onClick={handleNext} style={navBtnStyle}>→</button>
+                <button onClick={handlePrev} style={navBtnStyle} aria-label="Proyecto anterior">
+                  <ChevronLeft size={16} />
+                </button>
+                <button onClick={handleNext} style={navBtnStyle} aria-label="Proyecto siguiente">
+                  <ChevronRight size={16} />
+                </button>
               </div>
             </div>
           </div>
@@ -288,7 +303,7 @@ export function ProjectModal({ project, projects, currentIndex, onClose, onNavig
           </button>
 
           {/* Media area */}
-          <div style={{
+          <div className="project-modal-media" style={{
             height: "min(460px, 50vh)", minHeight: "220px", flexShrink: 0,
             background: "#0a0a0a",
             position: "relative", overflow: "hidden",
@@ -317,7 +332,7 @@ export function ProjectModal({ project, projects, currentIndex, onClose, onNavig
           </div>
 
           {/* Info panel */}
-          <div style={{ padding: "28px 36px 32px", position: "relative" }}>
+          <div className="project-modal-info" style={{ padding: "28px 36px 32px", position: "relative" }}>
             <div style={{ display: "block" }}>
               {/* Left info */}
               <div style={{ width: "100%", minWidth: 0 }}>
@@ -347,7 +362,7 @@ export function ProjectModal({ project, projects, currentIndex, onClose, onNavig
                   </p>
                 )}
 
-                <div className="project-description" style={{ paddingRight: "8px" }}>
+                <div className="project-description" style={{ paddingRight: "calc(min(360px, 40%) + 18px)" }}>
                   <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "14px", lineHeight: 1.8 }}>
                     {project.longDescription}
                   </p>
@@ -355,7 +370,7 @@ export function ProjectModal({ project, projects, currentIndex, onClose, onNavig
               </div>
 
               {/* Right: tools + action */}
-              <div style={{ position: "absolute", top: "28px", right: "36px", width: "min(360px, 40%)", minWidth: "200px" }}>
+              <div className="project-modal-tools" style={{ position: "absolute", top: "28px", right: "36px", width: "min(360px, 40%)", minWidth: "200px" }}>
                 <p style={{ color: "rgba(255,255,255,0.3)", fontSize: "11px", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "12px" }}>
                   {project.type === "3d" ? "Software utilizado" : "Tecnologías"}
                 </p>
@@ -365,7 +380,7 @@ export function ProjectModal({ project, projects, currentIndex, onClose, onNavig
                   ))}
                 </div>
 
-                {project.type === "web" && project.websiteUrl && (
+                {project.type === "web" && project.websiteUrl && project.websiteUrl !== "#" && (
                   <a
                     href={project.websiteUrl}
                     target="_blank"
