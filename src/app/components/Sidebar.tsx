@@ -22,7 +22,7 @@ const navItems = [
 const socialLinks = [
   { icon: Github, href: "https://github.com/wokaryking" },
   { icon: Twitter, href: "https://x.com/Estebangod12" },
-  { icon: Instagram, href: "https://www.instagram.com/estebanguzman641/" },
+  { icon: Instagram, href: "https://www.instagram.com/este_bank_its_busy?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==" },
   { icon: Linkedin, href: "https://www.linkedin.com/in/esteban-guzman-23687825a/" },
   { icon: Youtube, href: "https://www.youtube.com/channel/UCTLDVOviCjcgaK6jzVBwmiA" },
 ];
