@@ -7,16 +7,18 @@ import radioImg from "../../imports/3d_radio.png";
 import dragonImg from "../../imports/3d_dragon.png";
 import simondiceImg from "../../imports/simondiceportada.png";
 import gamezoneImg from "../../imports/gamezone.png";
-import pitzzahutImg from "../../imports/pitzzahutportada.png"
-import YciergImg from "../../imports/Yciergportda.png"
+import pitzzahutImg from "../../imports/pitzzahutportada.png";
+import YciergImg from "../../imports/Yciergportda.png";
 import AviciiImg from "../../imports/aviciiportada.png"
-import microsoftImg from "../../imports/Microsoftportada.png"
-import yamahaImg from "../../imports/Yamahaportada.png"
+import microsoftImg from "../../imports/Microsoftportada.png";
+import yamahaImg from "../../imports/Yamahaportada.png";
+import pixarImg from "../../imports/robp.0301.png";
 import tesisDniImg from "../../imports/Tesis-DNI.png"
 import threeDIcon from "../../imports/icons/3d-model-ico.png";
 import newsIcon from "../../imports/icons/news-ico.png";
 import videoIcon from "../../imports/icons/video-ico.png";
 import webIcon from "../../imports/icons/web-ico.png";
+
 
 
 /* ── Project data ── */
@@ -62,19 +64,6 @@ const videoProjects: Project[] = [
   },
   {
     id: "v4",
-    title: "Microsoft",
-    category: "Video Editing",
-    type: "video",
-    theme: "Corporativo — Video publicitario",
-    shortDescription: "Video publicitario para Microsoft, creado para comunicar la identidad y propuesta de valor de la marca de forma clara, dinámica y profesional.",
-    longDescription: "Creación de un video publicitario para Microsoft, diseñado para presentar la marca y conectar su mensaje con la audiencia a través de una narrativa audiovisual moderna. La pieza combina una edición dinámica, selección precisa de tomas, ritmo visual y una estructura pensada para reforzar la comunicación corporativa.\n\nEl proceso de edición y montaje fue realizado en Adobe Premiere Pro, cuidando la continuidad, la sincronización audiovisual y el acabado final de la pieza.",
-    technologies: ["Premiere Pro"],
-    mediaKind: "video",
-    mediaPoster: microsoftImg,
-    mediaUrl: "/videos/Microsoft.mp4",
-  },
-  {
-    id: "v5",
     title: "Yamaha",
     category: "Video Editing",
     type: "video",
@@ -86,19 +75,32 @@ const videoProjects: Project[] = [
     mediaPoster: yamahaImg,
     mediaUrl: "/videos/Yamaha.mp4",
   },
-  /* {
-    id: "v6",
-    title: "Documentary Short",
+  {
+    id: "v5",
+    title: "Pixar",
     category: "Video Editing",
     type: "video",
-    theme: "Documental — Comunidad local",
-    shortDescription: "Cortometraje documental galardonado sobre un proyecto comunitario local, con narración y score original.",
-    longDescription: "Documental corto de 8 minutos que retrata la historia de un proyecto comunitario de impacto social. Incluye entrevistas, imágenes de archivo, narración en off y un score musical original. Premiado en festival de cine documental regional.",
-    technologies: ["Premiere Pro", "Audition", "DaVinci Resolve"],
-    mediaKind: "youtube",
-    mediaPoster: laCocinaImg,
-    mediaUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-  }, */
+    theme: "Animación — Video Pixar",
+    shortDescription: "Video inspirado en Pixar, presentado con una pieza audiovisual y recursos visuales 3D.",
+    longDescription: "Proyecto audiovisual de Pixar presentado en formato de video.",
+    technologies: ["3D", "Edición de video"],
+    mediaKind: "video",
+    mediaPoster: pixarImg,
+    mediaUrl: "/videos/Pixar.mp4",
+  },
+  {
+    id: "v6",
+    title: "Microsoft",
+    category: "Video Editing",
+    type: "video",
+    theme: "Corporativo — Video publicitario",
+    shortDescription: "Video publicitario para Microsoft, creado para comunicar la identidad y propuesta de valor de la marca de forma clara, dinámica y profesional.",
+    longDescription: "Creación de un video publicitario para Microsoft, diseñado para presentar la marca y conectar su mensaje con la audiencia a través de una narrativa audiovisual moderna. La pieza combina una edición dinámica, selección precisa de tomas, ritmo visual y una estructura pensada para reforzar la comunicación corporativa.\n\nEl proceso de edición y montaje fue realizado en Adobe Premiere Pro, cuidando la continuidad, la sincronización audiovisual y el acabado final de la pieza.",
+    technologies: ["Premiere Pro"],
+    mediaKind: "video",
+    mediaPoster: microsoftImg,
+    mediaUrl: "/videos/Microsoft.mp4",
+  },
 ];
 
 const webProjects: Project[] = [
@@ -199,6 +201,19 @@ const threeDProjects: Project[] = [
     mediaKind: "sketchfab",
     mediaPoster: radioImg,
     mediaUrl: "https://sketchfab.com/models/41d373739fd84506bf7d1d6ec9416941/embed?autospin=1&autostart=1&preload=1",
+  },
+  {
+    id: "3d-pixar",
+    title: "Pixar EG",
+    category: "3D Design",
+    type: "3d",
+    theme: "Modelado — Visualización 3D",
+    shortDescription: "Modelo 3D de Pixar EG embebido desde Sketchfab para visualizar la pieza en la web.",
+    longDescription: "Modelo 3D de una pieza inspirada en la estética de Pixar, presentado como un asset interactivo embebido en la web. La propuesta permite explorar la escultura en perspectiva y navegarla como un modelo 3D completo.",
+    technologies: ["Sketchfab", "3D Model", "Web Viewer"],
+    mediaKind: "sketchfab",
+    mediaPoster: pixarImg,
+    mediaUrl: "https://sketchfab.com/models/520f4d013c3b42558a7343b14a5c29c1/embed",
   },
   /* {
     id: "3d2",
@@ -338,8 +353,11 @@ function ProjectThumb({ project, onClick }: { project: Project; onClick: () => v
             width: "100%",
             height: "100%",
             objectFit: "cover",
+            objectPosition: "center center",
             display: "block",
             opacity: project.mediaPoster ? 1 : 0,
+            transform: "scale(1.02)",
+            background: "#000",
           }}
         />
         {/* Fallback icon when no poster */}
