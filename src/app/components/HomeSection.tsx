@@ -85,7 +85,7 @@ export function HomeSection() {
           >
             {isSpanish ? "Hola, soy Esteban," : "Hi, I'm Esteban,"}
             <br />
-            <span style={{ color: "#F4B321" }}>{isSpanish ? "Diseñador Gráfico" : "Graphic Designer"}</span>
+            <span style={{ color: "#F4B321" }}>{isSpanish ? "Diseñador/ Web Developer" : "Graphic Designer/Web Developer"}</span>
           </h1>
 
           <p
